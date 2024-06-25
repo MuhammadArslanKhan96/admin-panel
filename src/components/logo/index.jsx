@@ -18,7 +18,7 @@ const LogoSection = ({ sx, to }) => {
       <Stack direction="row" spacing={1} alignItems="center">
         <Logo />
         <Chip
-          label={import.meta.env.VITE_APP_VERSION}
+          label={'v1.3.0'}
           variant="outlined"
           size="small"
           color="secondary"
