@@ -14,6 +14,11 @@ const UserForm = Loadable(lazy(() => import('pages/authentication/user')));
 const UserList = Loadable(lazy(() => import('pages/authentication/userlist')));
 import CollectionFormPage from 'pages/authentication/collectionsform';
 import CollectionListPage from 'pages/authentication/collections';
+import CollectionNftPage from 'pages/collections/CollectionNftPage';
+import StakeList from 'pages/authentication/stakeList';
+import Stake from 'pages/authentication/stake';
+import AuthRegister from 'pages/authentication/auth-forms/AuthRegister';
+import AuthLogin from 'pages/authentication/auth-forms/AuthLogin';
 
 // render - sample page
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')));
@@ -58,6 +63,14 @@ const MainRoutes = {
       element: <NftForm />
     },
     {
+      path: '/nft/:collectionId',
+      element: <CollectionNftPage />
+    },
+    {
+      path: '/nft/:collectionId/:nftId',
+      element: <CollectionNftPage />
+    },
+    {
       path: '/nftlist',
       element: <NftList />
     },
@@ -76,7 +89,15 @@ const MainRoutes = {
     {
       path: '/collectionslist',
       element: <CollectionListPage />
-    }
+    },
+    {
+      path: '/stakelist',
+      element: <StakeList />
+    },
+    {
+      path: '/stake',
+      element: <Stake />
+    },
   ]
 };
 

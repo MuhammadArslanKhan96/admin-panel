@@ -5,9 +5,12 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import fetchData from '../../apiRequest/collection';
-import { GithubUser } from 'apiPath/apiPath';
+import { getCollectionData } from 'apiPath/apiPath';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const CollectionListPage = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,7 +18,8 @@ const CollectionListPage = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await fetchData(GithubUser);
+        const data = await fetchData(getCollectionData);
+        console.log(data);
         setData(data);
         setError(null);
       } catch (error) {
@@ -50,31 +54,26 @@ const CollectionListPage = () => {
             <TableCell>Category</TableCell>
             <TableCell>Collection Address</TableCell>
             <TableCell>BlockChain</TableCell>
+            <TableCell>NFT's</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell>Collection</TableCell>
-            <TableCell>WWW.Example.Com</TableCell>
-            <TableCell>DESCRIP</TableCell>
-            <TableCell>LOGO GAME</TableCell>
-            <TableCell>sadasdw</TableCell>
-            <TableCell>DIGITAL</TableCell>
-            <TableCell>WORK</TableCell>
-            <TableCell>1231123</TableCell>
-            <TableCell>BSC BLOCKCHAIN</TableCell>
-          </TableRow>
           {data.map((collection, index) => (
             <TableRow key={index}>
               <TableCell>{collection.name}</TableCell>
               <TableCell>{collection.url}</TableCell>
               <TableCell>{collection.description}</TableCell>
-              <TableCell>{collection.logo}</TableCell>
-              <TableCell>{collection.bannerImg}</TableCell>
+              <TableCell>{collection.logo_image}</TableCell>
+              <TableCell>{collection.banner_image}</TableCell>
               <TableCell>{collection.kind}</TableCell>
               <TableCell>{collection.category}</TableCell>
-              <TableCell>{collection.collectionAddress}</TableCell>
+              <TableCell>{collection.collection_address}</TableCell>
               <TableCell>{collection.blockchain}</TableCell>
+              <TableCell>
+              <Button variant="contained" color="primary" onClick={() => navigate(`/nft/${collection.id}`)} sx={{ mb: { xs: -3, sm: 4 } }}>
+              View NFT's
+            </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

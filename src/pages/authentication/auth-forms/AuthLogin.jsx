@@ -16,6 +16,7 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 
 // third party
 import * as Yup from 'yup';
@@ -33,6 +34,7 @@ import FirebaseSocial from './FirebaseSocial';
 
 export default function AuthLogin({ isDemo = false }) {
   const [checked, setChecked] = React.useState(false);
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => {
@@ -129,9 +131,9 @@ export default function AuthLogin({ isDemo = false }) {
                     }
                     label={<Typography variant="h6">Keep me sign in</Typography>}
                   />
-                  <Link variant="h6" component={RouterLink} color="text.primary">
+                  {/* <Link variant="h6" component={RouterLink} color="text.primary">
                     Forgot Password?
-                  </Link>
+                  </Link> */}
                 </Stack>
               </Grid>
               {errors.submit && (
@@ -148,11 +150,19 @@ export default function AuthLogin({ isDemo = false }) {
               </Grid>
               <Grid item xs={12}>
                 <Divider>
-                  <Typography variant="caption"> Login with</Typography>
+                  <Typography variant="caption">Don't have an account yet?</Typography>
+                  <Link
+                    component="button"
+                    variant="body2"
+                    onClick={() => navigate('/register')}
+                    sx={{ color: 'blue', marginLeft: '0.5em' }} // Added style for blue color and spacing
+                  >
+                    Register
+                  </Link>
                 </Divider>
               </Grid>
               <Grid item xs={12}>
-                <FirebaseSocial />
+                {/* <FirebaseSocial /> */}
               </Grid>
             </Grid>
           </form>

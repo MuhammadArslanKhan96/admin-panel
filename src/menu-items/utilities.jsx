@@ -76,6 +76,14 @@ const utilities = {
       target: false
     },
     {
+      id: 'stake1',
+      title: 'Stake',
+      type: 'item',
+      url: '/stake',
+      icon: icons.FaWpforms,
+      target: false
+    },
+    {
       id: 'userlist1',
       title: 'User List',
       type: 'item',
@@ -88,6 +96,14 @@ const utilities = {
       title: 'Collection List',
       type: 'item',
       url: '/collectionslist',
+      icon: icons.FaListUl,
+      target: false
+    },
+    {
+      id: 'stakelist1',
+      title: 'Stake List',
+      type: 'item',
+      url: '/stakelist',
       icon: icons.FaListUl,
       target: false
     }

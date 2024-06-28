@@ -1,59 +1,69 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from './UserContext';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import fetchData from '../../../../apiRequest/collection';
+import { getAllUsers } from '../../../../apiPath/apiPath';
 
 export default function UserListPage() {
-  const { userData } = useContext(UserContext);
+  const [data, setData] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getAllUsersData = async () => {
+      try {
+        const data = await fetchData(getAllUsers);
+        console.log(data);
+        setData(data);
+        setError(null);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getAllUsersData();
+  }, []);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>Username</TableCell>
+          <TableCell>Name</TableCell>
           <TableCell>Email</TableCell>
-          <TableCell>Price</TableCell>
-          <TableCell>Rate</TableCell>
-          <TableCell>Duration</TableCell>
-          <TableCell>Type</TableCell>
+          <TableCell>Wallet</TableCell>
+          <TableCell>Contact Details</TableCell>
+          <TableCell>Profile Image</TableCell>
+          <TableCell>Address</TableCell>
+          <TableCell>Country</TableCell>
+          <TableCell>Role</TableCell>
+          <TableCell>Date</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        <TableRow>
-          <TableCell>Amjad</TableCell>
-          <TableCell>amjadabro936@gmail.com</TableCell>
-          <TableCell>294</TableCell>
-          <TableCell>215</TableCell>
-          <TableCell>1d 21hr</TableCell>
-          <TableCell>Fixed</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Afzal</TableCell>
-          <TableCell>afzalimdad9@gmail.com</TableCell>
-          <TableCell>215</TableCell>
-          <TableCell>294</TableCell>
-          <TableCell>2d 1hr</TableCell>
-          <TableCell>Fixed</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Arslan</TableCell>
-          <TableCell>Arslan@gmail.com</TableCell>
-          <TableCell>012</TableCell>
-          <TableCell>92</TableCell>
-          <TableCell>9hr 5min</TableCell>
-          <TableCell>Flexible</TableCell>
-        </TableRow>
-        {userData.map((user, index) => (
+        {data.data.map((user, index) => (
           <TableRow key={index}>
-            <TableCell>{user.username}</TableCell>
+            <TableCell>{user.name}</TableCell>
             <TableCell>{user.email}</TableCell>
-            <TableCell>{user.price}</TableCell>
-            <TableCell>{user.rate}</TableCell>
-            <TableCell>{user.duration}</TableCell>
-            <TableCell>{user.type}</TableCell>
+            <TableCell>{user.wallet.slice(0,14)}...</TableCell>
+            <TableCell>{user.contact_details}</TableCell>
+            <TableCell>{user.img}</TableCell>
+            <TableCell>{user.address}</TableCell>
+            <TableCell>{user.country}</TableCell>
+            <TableCell>{user.role}</TableCell>
+            <TableCell>{user.created_at}</TableCell>
           </TableRow>
         ))}
       </TableBody>
